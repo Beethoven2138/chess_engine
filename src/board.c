@@ -13,7 +13,7 @@ int *init_game(void)
 	}
 	memset(ret + 10 * 12, INVALID, 24 * sizeof(int));
 
-	ret[26]=ROOK | BLACK;ret[27]=KNIGHT | BLACK;ret[28]=BISHOP | BLACK;ret[29]=KING | BLACK;ret[30]=QUEEN | BLACK;ret[31]=BISHOP | BLACK;ret[32]=KNIGHT | BLACK;ret[33]=ROOK | BLACK;ret[38]=PAWN | BLACK;ret[39]=PAWN | BLACK;ret[40]=PAWN | BLACK;ret[41]=PAWN | BLACK;ret[42]=PAWN | BLACK;ret[43]=PAWN | BLACK;ret[44]=PAWN | BLACK;ret[45]=PAWN | BLACK;ret[98]=PAWN;ret[99]=PAWN;ret[100]=PAWN;ret[101]=PAWN;ret[102]=PAWN;ret[103]=PAWN;ret[104]=PAWN;ret[105]=PAWN;ret[109]=ROOK;ret[110]=KNIGHT;ret[111]=BISHOP;ret[112]=KING;ret[113]=QUEEN;ret[114]=BISHOP;ret[115]=KNIGHT;ret[116]=ROOK;
+	ret[26]=ROOK | BLACK;ret[27]=KNIGHT | BLACK;ret[28]=BISHOP | BLACK;ret[29]=KING | BLACK;ret[30]=QUEEN | BLACK;ret[31]=BISHOP | BLACK;ret[32]=KNIGHT | BLACK;ret[33]=ROOK | BLACK;ret[38]=PAWN | BLACK;ret[39]=PAWN | BLACK;ret[40]=PAWN | BLACK;ret[41]=PAWN | BLACK;ret[42]=PAWN | BLACK;ret[43]=PAWN | BLACK;ret[44]=PAWN | BLACK;ret[45]=PAWN | BLACK;ret[98]=PAWN;ret[99]=PAWN;ret[100]=PAWN;ret[101]=PAWN;ret[102]=PAWN;ret[103]=PAWN;ret[104]=PAWN;ret[105]=PAWN;ret[110]=ROOK;ret[111]=KNIGHT;ret[112]=BISHOP;ret[113]=KING;ret[114]=QUEEN;ret[115]=BISHOP;ret[116]=KNIGHT;ret[117]=ROOK;
 
 	return ret;
 }
@@ -591,4 +591,40 @@ MOVE *find_legal_moves(int *board, char color)
 void make_move(int *board, MOVE move);
 int get_value(int *board, char side_to_move);
 
-void print_board(int *board, char perspective);
+void print_board(int *board, char perspective)
+{
+	for (int y = 0; y < 8; ++y)
+	{
+		for (int x = 0; x < 8; ++x)
+		{
+			int tmp_piece = board[26 + x + y*12];
+			switch (tmp_piece & 0xF)
+			{
+			case PAWN:
+			        printf("p");
+				break;
+			case ROOK:
+				printf("r");
+				break;
+			case KING:
+				printf("k");
+				break;
+			case QUEEN:
+			        printf("q");
+				break;
+			case BISHOP:
+				printf("b");
+				break;
+			case KNIGHT:
+				printf("k");
+				break;
+			case EMPTY:
+				printf(".");
+				break;
+			default:
+				exit(-1);
+			}
+		}
+		printf("\n");
+	}
+}
