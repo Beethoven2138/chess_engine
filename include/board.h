@@ -23,8 +23,8 @@ enum pieces
 #define BLACK 1 << 31
 #define IS_BLACK(a) ((a & BLACK) >> 31)
 #define IS_WHITE(a) (!((a & BLACK) >> 31))
-#define SAME_COLOR(a/*piece with color offset by 31*/, b) (((piece >> 31) ^ colour) == 0)
-#define DIFFERENT_COLOR(a/*piece with color offset by 31*/, b) (((piece >> 31) ^ colour) == 1)
+#define SAME_COLOR(a/*piece with color offset by 31*/, b) (((a >> 31) ^ b) == 0)
+#define DIFFERENT_COLOR(a/*piece with color offset by 31*/, b) (((a >> 31) ^ b) == 1)
 
 //absolute
 typedef struct _cord
@@ -35,7 +35,7 @@ typedef struct _cord
 typedef struct _move
 {
 	CORD start, end;
-	_move *next;
+	struct _move *next;
 } MOVE;
 
 //board's gonna be 12 * 12, white at 0,0 from downwards perspective
@@ -49,10 +49,11 @@ static MOVE *knight_moves(int *board, CORD square);
 static MOVE *queen_moves(int *board, CORD square);
 static MOVE *king_moves(int *board, CORD square);
 static MOVE *rook_moves(int *board, CORD square);
+static MOVE *pawn_moves(int *board, CORD square);
 
 int *init_game(void);
-MOVE *find_legal_moves(int *board, char perspective);
-void make_move(MOVE move);
+MOVE *find_legal_moves(int *board, char color);
+void make_move(int *board, MOVE move);
 int get_value(int *board, char side_to_move);
 
 void print_board(int *board, char perspective);
