@@ -18,7 +18,7 @@ int *init_game(void)
 	return ret;
 }
 
-static MOVE *diagonal_moves(int *board, CORD square, int color /*black = 1*/, char king)
+static MOVE *diagonal_moves(int *board, CORD square, char color /*black = 1*/, char king)
 {
 	MOVE *ret = NULL;
 	MOVE *node = NULL;
@@ -193,10 +193,10 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x+1;node->end.y = square.y+2;
 		node->next = NULL;
 	}
-	int piece = board[26 + (square.y+2)*12 + square.x-1];
+	piece = board[26 + (square.y+2)*12 + square.x-1];
 	if (piece != INVALID && (DIFFERENT_COLOR(piece, color) || piece == EMPTY))
 	{
 		if (node == NULL)
@@ -210,10 +210,10 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x-1;node->end.y = square.y+2;
 		node->next = NULL;
 	}
-	int piece = board[26 + (square.y-2)*12 + square.x+1];
+	piece = board[26 + (square.y-2)*12 + square.x+1];
 	if (piece != INVALID && (DIFFERENT_COLOR(piece, color) || piece == EMPTY))
 	{
 		if (node == NULL)
@@ -227,10 +227,10 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x+1;node->end.y = square.y-2;
 		node->next = NULL;
 	}
-	int piece = board[26 + (square.y-2)*12 + square.x-1];
+	piece = board[26 + (square.y-2)*12 + square.x-1];
 	if (piece != INVALID && (DIFFERENT_COLOR(piece, color) || piece == EMPTY))
 	{
 		if (node == NULL)
@@ -244,10 +244,10 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x-1;node->end.y = square.y-2;
 		node->next = NULL;
 	}
-	int piece = board[26 + (square.y-1)*12 + square.x-2];
+	piece = board[26 + (square.y-1)*12 + square.x-2];
 	if (piece != INVALID && (DIFFERENT_COLOR(piece, color) || piece == EMPTY))
 	{
 		if (node == NULL)
@@ -261,10 +261,10 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x-2;node->end.y = square.y-1;
 		node->next = NULL;
 	}
-	int piece = board[26 + (square.y-1)*12 + square.x+2];
+	piece = board[26 + (square.y-1)*12 + square.x+2];
 	if (piece != INVALID && (DIFFERENT_COLOR(piece, color) || piece == EMPTY))
 	{
 		if (node == NULL)
@@ -278,10 +278,10 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x+2;node->end.y = square.y-1;
 		node->next = NULL;
 	}
-	int piece = board[26 + (square.y+1)*12 + square.x-2];
+	piece = board[26 + (square.y+1)*12 + square.x-2];
 	if (piece != INVALID && (DIFFERENT_COLOR(piece, color) || piece == EMPTY))
 	{
 		if (node == NULL)
@@ -295,10 +295,10 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x-2;node->end.y = square.y+1;
 		node->next = NULL;
 	}
-	int piece = board[26 + (square.y+1)*12 + square.x+2];
+	piece = board[26 + (square.y+1)*12 + square.x+2];
 	if (piece != INVALID && (DIFFERENT_COLOR(piece, color) || piece == EMPTY))
 	{
 		if (node == NULL)
@@ -312,7 +312,7 @@ static MOVE *l_moves(int *board, CORD square, char color /*black = 1*/)
 			node = node->next;
 		}
 		node->start.x = square.x;node->start.y = square.y;
-		node->end.x = square.x+i;node->end.y = square.y+i;
+		node->end.x = square.x+2;node->end.y = square.y+1;
 		node->next = NULL;
 	}
 	return ret;
@@ -332,7 +332,7 @@ static MOVE *knight_moves(int *board, CORD square)
 	MOVE *ret = NULL;
 	int piece = board[26 + square.y * 12 + square.x];
 	if (piece == KNIGHT)
-		ret = diagonal_moves(board, square, IS_BLACK(piece));
+		ret = l_moves(board, square, IS_BLACK(piece));
 	return ret;
 }
 
@@ -396,7 +396,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 			{
 				if (node == NULL)
 				{
-					node = (NODE*)malloc(sizeof(NODE));
+					node = (MOVE*)malloc(sizeof(MOVE));
 					ret = node;
 				}
 				else
@@ -412,7 +412,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 				{
 					if (node == NULL)
 					{
-						node = (NODE*)malloc(sizeof(NODE));
+						node = (MOVE*)malloc(sizeof(MOVE));
 						ret = node;
 					}
 					else
@@ -430,7 +430,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 			{
 				if (node == NULL)
 				{
-					node = (NODE*)malloc(sizeof(NODE));
+					node = (MOVE*)malloc(sizeof(MOVE));
 					ret = node;
 				}
 				else
@@ -447,7 +447,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 			{
 				if (node == NULL)
 				{
-					node = (NODE*)malloc(sizeof(NODE));
+					node = (MOVE*)malloc(sizeof(MOVE));
 					ret = node;
 				}
 				else
@@ -467,7 +467,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 			{
 				if (node == NULL)
 				{
-					node = (NODE*)malloc(sizeof(NODE));
+					node = (MOVE*)malloc(sizeof(MOVE));
 					ret = node;
 				}
 				else
@@ -483,7 +483,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 				{
 					if (node == NULL)
 					{
-						node = (NODE*)malloc(sizeof(NODE));
+						node = (MOVE*)malloc(sizeof(MOVE));
 						ret = node;
 					}
 					else
@@ -501,7 +501,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 			{
 				if (node == NULL)
 				{
-					node = (NODE*)malloc(sizeof(NODE));
+					node = (MOVE*)malloc(sizeof(MOVE));
 					ret = node;
 				}
 				else
@@ -518,7 +518,7 @@ static MOVE *pawn_moves(int *board, CORD square)
 			{
 				if (node == NULL)
 				{
-					node = (NODE*)malloc(sizeof(NODE));
+					node = (MOVE*)malloc(sizeof(MOVE));
 					ret = node;
 				}
 				else
@@ -535,12 +535,59 @@ static MOVE *pawn_moves(int *board, CORD square)
 	return ret;
 }
 
-MOVE *find_legal_moves(int *board)
+MOVE *find_legal_moves(int *board, char color)
 {
-	MOVE *node = (MOVE*)malloc(sizeof(MOVE));
-	memset(node, 0, sizeof(MOVE));
-	
+	MOVE *ret = NULL;
+	MOVE *node = NULL;
+        for (int y = 0; y < 8; ++y)
+	{
+		for (int x = 0; x < 8; ++x)
+		{
+			int tmp_piece = board[26 + x + y*12];
+			if (IS_BLACK(tmp_piece) == color)
+			{
+				CORD tmp_c;tmp_c.x=x+2;tmp_c.y=y+2;
+				MOVE *tmp_node = NULL;
+				switch (tmp_piece & 0xF)
+				{
+				case PAWN:
+					tmp_node = pawn_moves(board, tmp_c);
+					break;
+				case ROOK:
+					tmp_node = rook_moves(board, tmp_c);
+					break;
+				case KING:
+					tmp_node = king_moves(board, tmp_c);
+					break;
+				case QUEEN:
+					tmp_node = queen_moves(board, tmp_c);
+					break;
+				case BISHOP:
+					tmp_node = bishop_moves(board, tmp_c);
+					break;
+				case KNIGHT:
+					tmp_node = knight_moves(board, tmp_c);
+					break;
+				default:
+					break;
+				}
+				if (tmp_node != NULL)
+				{
+					if (node == NULL)
+					        ret = node = tmp_node;
+					else
+					{
+						while (node->next != NULL)
+							node = node->next;
+						node->next = tmp_node;
+					}
+				}
+			}
+		}
+	}
+	return ret;
 }
+
 void make_move(int *board, MOVE move);
 int get_value(int *board, char side_to_move);
 
