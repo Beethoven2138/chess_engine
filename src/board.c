@@ -7,7 +7,7 @@ int *init_game(void)
 	memset(ret, INVALID, 24 * sizeof(int));
 	for (int i = 0; i < 8; ++i)
 	{
-		ret[24 + i * 12] = ret[25 + i * 12] = ret[36 + i * 12] = ret[36 + i * 12] = INVALID;
+		ret[24 + i * 12] = ret[25 + i * 12] = ret[36 + i * 12] = ret[37 + i * 12] = INVALID;
 		if (i > 1 && i < 6)
 			memset(ret + 26 + i * 12, EMPTY, 8 * sizeof(int));
 	}
